@@ -5,24 +5,38 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dungeon-Crawler
+namespace Program
 {
    class Program
     {
         public static Player currentPlayer = new Player();
+        public static bool mainLoop = true;
         static void Main(string[] args)
         {
             
             Start();
             Encounters.FirstEncounter();
+            while (mainLoop)
+            {
+                Encounters.RandomEncounter();
+            }
         }
 
         static void Start()
         {
             Console.WriteLine("***The Dungeon***");
             Console.WriteLine("====================");
-            Console.Write("Name: ");
+            Console.Write("Enter your name: ");
             currentPlayer.name = Console.ReadLine();
+
+            while (currentPlayer.name == "")
+            {
+                Console.Clear();
+                Console.Write("I said... WHATS YOUR NAME: ");
+                currentPlayer.name = Console.ReadLine();
+                Console.Clear();
+            }
+
             Console.WriteLine("Hello " + currentPlayer.name + ", you need to help me get my skibidi rizz back please!!!");
             Console.WriteLine("I lost it to some giga chad inside this dungeon, please help me get it back...");
             Console.ReadKey();
@@ -61,7 +75,36 @@ namespace Dungeon-Crawler
             Combat(false, "Giant Spider", 1, 4);
         }
 
+        public static void BasicEncounter()
+        {
+            Console.Clear();
+            Console.WriteLine("TIME FOR BATTLE...");
+            Console.ReadKey();
+            Combat(true, "",0,0);
+        }
+
+        public static void WomenEncounter()
+        {
+            Console.Clear();
+            Console.WriteLine("A sexy baddie appears...");
+            Console.ReadKey();
+            Combat(false,"Sexy Baddie",1000,5000);
+        }
+
         //Encounter Tools
+
+        public static void RandomEncounter()
+        {
+            switch (rand.Next(0, 2))
+            {
+                case 0:
+                    BasicEncounter();
+                    break;
+                case 1:
+                    WomenEncounter();
+                    break;
+            }
+        }
         
         //The Combat method first decides if these enounter is a special type or a random enemy.
         //If its not a random enemy we get the name, power level, and health of that enemy.
@@ -71,9 +114,11 @@ namespace Dungeon-Crawler
             int p = 0; // Power
             int h = 0; // Health
 
-            if(random)
+            if(random) // Sets the Type of random mob and their stats
             {
-
+                n = GetName();
+                p = rand.Next(1,5);
+                h = rand.Next(1, 8);
             }
             else
             {
@@ -118,7 +163,7 @@ namespace Dungeon-Crawler
                     }
                     int attack = rand.Next(0, Program.currentPlayer.weaponValue) / 2;
                     Console.WriteLine("You Deal: " + attack + " damage");
-                    Console.WriteLine("You Take: " + damage + "damage from " + n);
+                    Console.WriteLine("You Take: " + damage + " damage from " + n);
                     Program.currentPlayer.health -= damage;
                     h -= attack;
                 }
@@ -133,7 +178,7 @@ namespace Dungeon-Crawler
                         {
                             damage = 0;
                         }
-                        Console.WriteLine("You Lose " + damage + " health and were unable to escape.");s
+                        Console.WriteLine("You Lose " + damage + " health and were unable to escape.");
                         Console.ReadKey();
                     }
                     else
@@ -162,13 +207,107 @@ namespace Dungeon-Crawler
                         int potionValue = 5;
                         Console.WriteLine("You healed for " +potionValue+ "health");
                         Program.currentPlayer.health += potionValue;
+                        Console.WriteLine("As you were healing, the "+n+" attacked you!");
+                        int damage = (p / 2) - Program.currentPlayer.armorValue;
+                        if (damage < 0)
+                        {
+                            damage = 0;
+                        }
+                        Console.WriteLine("You lose "+damage+" health");
                     }
                     Console.ReadLine();
                 }
+
+                if (Program.currentPlayer.health <= 0)
+                {
+                    //On Death
+                    Console.Clear();
+                    Console.WriteLine("You have been Slain by "+n);
+                    Console.ReadKey();
+                    Console.Clear();
+                    Console.WriteLine("                                      ....:-+*###%%%%##*+=:...          ..    ......................");
+                    Console.WriteLine("                                  ....-#@@@@@@@@@@@@@@@@@@@@@%=...     .      ......................");
+                    Console.WriteLine("                              .....+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@+:...           ...................");
+                    Console.WriteLine("                            ....=@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@=..          ...................");
+                    Console.WriteLine("                         ....:#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#:..   ..   ..................");
+                    Console.WriteLine("                        ...-%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#:....         .............");
+                    Console.WriteLine("                        .:#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@+..         ...   ........");
+                    Console.WriteLine("                      ..:%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#..        ..............");
+                    Console.WriteLine("                     ..:@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#..       ..............");
+                    Console.WriteLine("       ...           ..%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@=..  .... .............");
+                    Console.WriteLine("     ..*@@@#:...   ...-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#...  .....-#@@*:..... ");
+                    Console.WriteLine("    ..#@@@@@@@%-..  ..#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%-.. ...+@@@@@@@@:..   ");
+                    Console.WriteLine("    .*@@@@@@@@@@=.. .:#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@+....:#@@@@@@@@@#..  .");
+                    Console.WriteLine("  ..*@@@@@@@@@@@@+...:%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*...-%@@@@@@@@@@@*... ");
+                    Console.WriteLine("..+@@@@@@@@@@@@@@@@:.=@@@@@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#@@@@@@*..*@@@@@@@@@@@@@@@=..");
+                    Console.WriteLine(":@@@@@@@@@@@@@@@@@@@*=@@@@@@@*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#@@@@@@*=@@@@@@@@@@@@@@@@@@%:");
+                    Console.WriteLine("+@@@@@@@@@@@@@@@@@@@*=@@@@@@%=@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##@@@@@@*+@@@@@@@@@@@@@@@@@@@+");
+                    Console.WriteLine(".#@@@@@@@@@@@@@@@@@@#=@@@@@*%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@+@@@@@**@@@@@@@@@@@@@@@@@@%:");
+                    Console.WriteLine(".:#@@@@@@@@@@@@@@@@@%-#@@@#%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%*@@@%=#@@@@@@@@@@@@@@@@@@-.");
+                    Console.WriteLine("..:%@@@@@@@@@@@@@@@@@++@@%*@@@@@@@@@%#*#@@@@@@@@@@@@@@@@@@@@%##%@@@@@@@@@##@@#=@@@@@@@@@@@@@@@@@@=..");
+                    Console.WriteLine("....-+*#####%@@@@@@@@#-@@##@@@%=:........:+@@@@@@@@@@@@@@*-........:-#@@@#*@@-*@@@@@@@@@@@@@@@%+:.. ");
+                    Console.WriteLine("    ..............:+@%-%@*@@@*..          ..=@@@@@@@@@@+...        ...+@@@*%@-#@#-...............   ");
+                    Console.WriteLine("                   ....+%+@@@..             .-%@@@@@@@+..           ...%@@+%#.....                  ");
+                    Console.WriteLine("                     ...:*@@#.             ..=@@@@@@@@+.            ...#@@#:..                      ");
+                    Console.WriteLine("                     ..:+@@@#.             ..*@@@@@@@@#:.            ..*@@@*:..                     ");
+                    Console.WriteLine("                     .*@@@@@@.             .*@@@@@@@@@@#..           ..%@@@@@#..                    ");
+                    Console.WriteLine("                     .=@@@@@@+..    .....:+@@@@*.=+.*@@@@*:....    ...=@@@@@@*..                    ");
+                    Console.WriteLine("                     ..*@@@@@@*:.....-+#@@@@@@-..=+..:@@@@@@#+-.....:+@@@@@@#..                     ");
+                    Console.WriteLine("                      ..%@@@@@@@@@@@@@@@@@@@@=...=+...=@@@@@@@@@@@@@@@@@@@@@..                      ");
+                    Console.WriteLine("                        :@@@@@@@@@@@@@@@@@@@#.. .**. ..*@@@@@@@@@@@@@@@@@@@-..                      ");
+                    Console.WriteLine("                        ..+%@@@@@@@@@@@@@@@@*. ..%@:  .*@@@@@@@@@@@@@@@@@+..                        ");
+                    Console.WriteLine("                         ...:+%@@%%@@@@@@@@@#:..:@@-..:#@@@@@@@@@@@@@%+:...                         ");
+                    Console.WriteLine("                         ....-%%%#...-@@@@@@@@=.@@@@.-%@@@@@@@=...#%%%-...                          ");
+                    Console.WriteLine("                      ...:*@*-@@@@...-@@@@@@@@@@@@@@@@@@@@@@@@+...@@@@=+@*.....                     ");
+                    Console.WriteLine("               ......:+@@@@@:*@@@@+..:%%@@@@@@@@@@@@@@@@@@@@@@-..-@@@@#.@@@@%=:......               ");
+                    Console.WriteLine("   ..........:-++*#@@@@@@@@@.#@@@@@+:.#***@#@@@@@@@@@@@@%@#*##:.=%@@@@@.@@@@@@@@@#*++-:...........  ");
+                    Console.WriteLine("  .=%@@@@@@@@@@@@@@@@@@@@@@@:+@@@@@@@+%=#@@@#%**@%%%+*#*@@%#+%*@@@@@@@#.@@@@@@@@@@@@@@@@@@@@@@@%=...");
+                    Console.WriteLine("..*@@@@@@@@@@@@@@@@@@@@@@@@@@:#@@@@@@@#@#=@@%@#@@**@@=@#@@=*%#@@@@@@@#:%@@@@@@@@@@@@@@@@@@@@@@@@@#:.");
+                    Console.WriteLine(".-@@@@@@@@@@@@@@@@@@@@@@@@@@*..+@@@@@@@%#%#*%@#@@#*@@+@@*%%@%@@@@@@@+..*%@@@@@@@@@@@@@@@@@@@@@@@@@+.");
+                    Console.WriteLine(".:#@@@@@@@@@@@@@@@@@@@@@@#-..  .*@@@@@@@@#%*@###@**@+%%@%%%@@@@@@@@#.....:*@@@@@@@@@@@@@@@@@@@@@@@-.");
+                    Console.WriteLine(" .-%@@@@@@@@@@@@@@@@@@@=....   ..%@@@@@@@@@@%*%*@#*@:@#@%@@@@@@@@@@..     ..-%@@@@@@@@@@@@@@@@@@@*..");
+                    Console.WriteLine("  ...%@@@@@@@@@@@@@@%-.         ..@@@@@@@@@@@@#%*#*#@#@@@@@@@@@@@@-.        ...*@@@@@@@@@@@@@@@-... ");
+                    Console.WriteLine("    .=@@@@@@@@@@@@%-...           :%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@=.         .....#@@@@@@@@@@@@#..   ");
+                    Console.WriteLine("     :@@@@@@@@@@@+..              ..+@@@@@@@@@@@@@@@@@@@@@@@@@@#-.              ..-%@@@@@@@@@@=..   ");
+                    Console.WriteLine("     .-@@@@@@@@%-..                ...*@@@@@@@@@@@@@@@@@@@@@@%:...               ...*@@@@@@@@*..    ");
+                    Console.WriteLine("        ..::::...                     ..=%@@@@@@@@@@@@@@@@@#:..                     ...::::....     ");
+                    Console.WriteLine(" ");
+                    Console.WriteLine(" ");
+                    Console.WriteLine("Press Enter to quit...");
+                    System.Environment.Exit(0);
+                }
                 Console.ReadKey();
             }
+            int coin = rand.Next(10, 50);
+            Console.WriteLine("You defeated "+n);
+            Console.Clear();
+            Console.WriteLine("You Gained: "+coin+ " Gold Coins");
+            Program.currentPlayer.coins += coin;
+            Console.ReadKey();
         }
 
+        public static string GetName()
+        {
+            switch (rand.Next(0, 4))
+            {
+                case 0:
+                    return "Giant Spider";
+                    break;
+                case 1:
+                    return "Big Man";
+                case 2:
+                    return "Skeleton";
+                case 3:
+                    return "Warden";
+            }
+            return "Goblin";
+        }
     }
 }
 
+// ------------------ CITATIONS ------------------
+// https://www.c-sharpcorner.com/article/c-sharp-list/
+// https://learn.microsoft.com/en-us/dotnet/csharp/
+// https://www.w3schools.com/cs/index.php
+// https://youtu.be/wxznTygnRfQ?si=36g79w0njOLUFKzr
+// -----------------------------------------------

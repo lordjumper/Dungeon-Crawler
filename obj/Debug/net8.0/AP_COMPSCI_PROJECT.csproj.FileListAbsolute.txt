@@ -20,3 +20,10 @@ C:\Users\zakym\source\repos\AP_COMPSCI_PROJECT\AP_COMPSCI_PROJECT\Dungeon-Crawle
 C:\Users\zakym\source\repos\AP_COMPSCI_PROJECT\AP_COMPSCI_PROJECT\Dungeon-Crawler\obj\Debug\net8.0\AP_COMPSCI_PROJECT.dll
 C:\Users\zakym\source\repos\AP_COMPSCI_PROJECT\AP_COMPSCI_PROJECT\Dungeon-Crawler\obj\Debug\net8.0\refint\AP_COMPSCI_PROJECT.dll
 C:\Users\zakym\source\repos\AP_COMPSCI_PROJECT\AP_COMPSCI_PROJECT\Dungeon-Crawler\obj\Debug\net8.0\AP_COMPSCI_PROJECT.pdb
+C:\Users\zakym\source\repos\AP_COMPSCI_PROJECT\AP_COMPSCI_PROJECT\Dungeon-Crawler\bin\Debug\net8.0\AP_COMPSCI_PROJECT.exe
+C:\Users\zakym\source\repos\AP_COMPSCI_PROJECT\AP_COMPSCI_PROJECT\Dungeon-Crawler\bin\Debug\net8.0\AP_COMPSCI_PROJECT.deps.json
+C:\Users\zakym\source\repos\AP_COMPSCI_PROJECT\AP_COMPSCI_PROJECT\Dungeon-Crawler\bin\Debug\net8.0\AP_COMPSCI_PROJECT.runtimeconfig.json
+C:\Users\zakym\source\repos\AP_COMPSCI_PROJECT\AP_COMPSCI_PROJECT\Dungeon-Crawler\bin\Debug\net8.0\AP_COMPSCI_PROJECT.dll
+C:\Users\zakym\source\repos\AP_COMPSCI_PROJECT\AP_COMPSCI_PROJECT\Dungeon-Crawler\bin\Debug\net8.0\AP_COMPSCI_PROJECT.pdb
+C:\Users\zakym\source\repos\AP_COMPSCI_PROJECT\AP_COMPSCI_PROJECT\Dungeon-Crawler\obj\Debug\net8.0\AP_COMPSCI_PROJECT.genruntimeconfig.cache
+C:\Users\zakym\source\repos\AP_COMPSCI_PROJECT\AP_COMPSCI_PROJECT\Dungeon-Crawler\obj\Debug\net8.0\ref\AP_COMPSCI_PROJECT.dll
