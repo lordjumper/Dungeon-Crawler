@@ -273,21 +273,32 @@ namespace Program
 
     public class shop
     {
-        static int armorMod;
-        static int weaponMod;
-        static int difficultyMod;
-
         public static void LoadShop(Player player)
         {
-            armorMod = player.armorValue;
-            weaponMod = player.weaponValue;
-            difficultyMod = player.mods;
-
             RunShop(player);
         }
 
         public static void RunShop(Player player)
         {
+            int potionPrice = 20 + 10 * player.mods;
+            int armorPrice = 100 * player.armorValue;
+            int weaponPrice = player.weaponValue + 1;
+            
+            
+            while (true)
+            {
+               Console.WriteLine("<<<<<<<<<*SHOP*>>>>>>>>>>");
+               Console.WriteLine("=========================");
+               Console.WriteLine("(W)eapons:             $");
+               Console.WriteLine("------------------------");
+               Console.WriteLine("(A)rmor:               $"); 
+               Console.WriteLine("------------------------");
+               Console.WriteLine("(P)otions:             $");
+               Console.WriteLine("------------------------");
+               Console.WriteLine("(D)Mods:               $");
+               Console.WriteLine("========================="); 
+            }
+            
             
         }
     }
