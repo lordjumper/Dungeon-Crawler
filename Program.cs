@@ -48,15 +48,24 @@ namespace Program
             Console.ReadKey();
         }
     }
-    class Player
+    class Player // Player Base values
     {
-    public string name;
-    public int coins = 0;
-    public int health = 10;
-    public int damage = 1;
-    public int armorValue = 0;
-    public int potion = 5;
-    public int weaponValue = 1;
+        Random rand;
+
+        public string name;
+        public int coins = 0;
+        public int health = 10;
+        public int damage = 1;
+        public int armorValue = 0;
+        public int potion = 5;
+        public int weaponValue = 1;
+    
+        public int mods = 0; // Difficulity 
+
+         public int GetStat() // returns the power based on the mod value.
+         {
+             int upper = (2 * mods + 7);
+         }
     }
 
     class Encounters
