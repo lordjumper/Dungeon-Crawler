@@ -48,7 +48,7 @@ namespace Program
             Console.ReadKey();
         }
     }
-    class Player // Player Base values
+    public class Player // Player Base values
     {
         Random rand;
 
@@ -76,7 +76,7 @@ namespace Program
          }
     }
 
-    class Encounters
+    public class Encounters
     {
         static Random rand = new Random();
         //Encounter Generic
@@ -134,7 +134,7 @@ namespace Program
             {
                 n = GetName();
                 p = Program.currentPlayer.GetPower();
-                h = Program.currentPlayer.GetStat();
+                h = Program.currentPlayer.GetHealth();
             }
             else
             {
@@ -268,6 +268,27 @@ namespace Program
                     return "Warden";
             }
             return "Goblin";
+        }
+    }
+
+    public class shop
+    {
+        static int armorMod;
+        static int weaponMod;
+        static int difficultyMod;
+
+        public static void LoadShop(Player player)
+        {
+            armorMod = player.armorValue;
+            weaponMod = player.weaponValue;
+            difficultyMod = player.mods;
+
+            RunShop(player);
+        }
+
+        public static void RunShop(Player player)
+        {
+            
         }
     }
 }
