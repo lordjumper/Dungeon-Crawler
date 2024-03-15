@@ -83,12 +83,12 @@ namespace Program
             Combat(true, "",0,0);
         }
 
-        public static void WomenEncounter()
+        public static void DemonEncounter()
         {
             Console.Clear();
-            Console.WriteLine("A sexy baddie appears...");
+            Console.WriteLine("A Dark Demon appears...");
             Console.ReadKey();
-            Combat(false,"Sexy Baddie",1000,5000);
+            Combat(false,"Dark Demon",5,8);
         }
 
         //Encounter Tools
