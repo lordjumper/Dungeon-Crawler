@@ -63,8 +63,7 @@ namespace Program
     {
         static Random rand = new Random();
         //Encounter Generic
-
-
+        
 
         //Encounters
 
