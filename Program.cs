@@ -62,9 +62,17 @@ namespace Program
     
         public int mods = 0; // Difficulity 
 
-         public int GetStat() // returns the power based on the mod value.
+         public int GetHealth() // returns the health based on the mod value.
          {
-             int upper = (2 * mods + 7);
+             int upper = (2 * mods + 5);
+             int lower = (mods + 2);
+             return rand.Next(lower, upper);
+         }
+         public int GetPower() // returns the power based on the mod value.
+         {
+             int upper = (2 * mods + 2);
+             int lower = (mods + 1);
+             return rand.Next(lower, upper);
          }
     }
 
@@ -125,8 +133,8 @@ namespace Program
             if(random) // Sets the Type of random mob and their stats
             {
                 n = GetName();
-                p = rand.Next(1,5);
-                h = rand.Next(1, 8);
+                p = Program.currentPlayer.GetPower();
+                h = Program.currentPlayer.GetStat();
             }
             else
             {
