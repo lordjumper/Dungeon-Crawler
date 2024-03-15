@@ -101,7 +101,7 @@ namespace Program
                     BasicEncounter();
                     break;
                 case 1:
-                    WomenEncounter();
+                    DemonEncounter();
                     break;
             }
         }
