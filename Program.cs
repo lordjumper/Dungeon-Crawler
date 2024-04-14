@@ -37,20 +37,18 @@ namespace Program
                 Console.Clear();
             }
 
-            Console.WriteLine("Hello " + currentPlayer.name + ", you need to help me get my skibidi rizz back please!!!");
-            Console.WriteLine("I lost it to some giga chad inside this dungeon, please help me get it back...");
+            Console.WriteLine("Hello " + currentPlayer.name + ", you need to help me get my cat back!");
+            Console.WriteLine("She's in that cave just over there...");
             Console.ReadKey();
             Console.Clear();
             Console.WriteLine("You begin walking into the dungeon when something hairy brushes your leg...");
-            
-
 
             Console.ReadKey();
         }
     }
     public class Player // Player Base values
     {
-        Random rand;
+        Random rand = new Random();
 
         public string name;
         public int coins = 0;
@@ -74,14 +72,18 @@ namespace Program
              int lower = (mods + 1);
              return rand.Next(lower, upper);
          }
+         public int GetCoins()
+         {
+             int upper = (15 * mods + 50);
+             int lower = (10 * mods + 10);
+             return rand.Next(lower, upper);
+         }
     }
 
     public class Encounters
     {
         static Random rand = new Random();
-        //Encounter Generic
         
-
         //Encounters
 
         public static void FirstEncounter()
@@ -106,18 +108,40 @@ namespace Program
             Console.ReadKey();
             Combat(false,"Dark Demon",5,8);
         }
+        
+        public static void EyeOfHatred()
+        {
+            Console.Clear();
+            Console.WriteLine("A GIANT EYE...");
+            Console.ReadKey();
+            Combat(false,"EYE OF HATRED",7,15);
+        }
+        
+        public static void AnorTheGreat()
+        {
+            Console.Clear();
+            Console.WriteLine("Some guy named Anor...");
+            Console.ReadKey();
+            Combat(false,"ANOR THE GREAT",10,20);
+        }
 
         //Encounter Tools
 
         public static void RandomEncounter()
         {
-            switch (rand.Next(0, 2))
+            switch (rand.Next(0, 3))
             {
                 case 0:
                     BasicEncounter();
                     break;
                 case 1:
                     DemonEncounter();
+                    break;
+                case 2:
+                    EyeOfHatred();
+                    break;
+                case 3:
+                    AnorTheGreat();
                     break;
             }
         }
@@ -202,7 +226,7 @@ namespace Program
                         Console.WriteLine("You run away like a coward from the " +n);
                         Console.ReadKey();
                         //Go back to Store
-
+                        shop.LoadShop(Program.currentPlayer);
                     }
                 }
                 else if (decision.ToLower() == "h" || decision.ToLower() == "heal")
@@ -220,8 +244,8 @@ namespace Program
                     }
                     else
                     {
-                        int potionValue = 5;
-                        Console.WriteLine("You healed for " +potionValue+ "health");
+                        int potionValue = 3;
+                        Console.WriteLine("You healed for " +potionValue+ " health");
                         Program.currentPlayer.health += potionValue;
                         Console.WriteLine("As you were healing, the "+n+" attacked you!");
                         int damage = (p / 2) - Program.currentPlayer.armorValue;
@@ -245,7 +269,7 @@ namespace Program
                 }
                 Console.ReadKey();
             }
-            int coin = rand.Next(10, 50);
+            int coin = Program.currentPlayer.GetCoins();
             Console.WriteLine("You defeated "+n);
             Console.Clear();
             Console.WriteLine("You Gained: "+coin+ " Gold Coins");
@@ -255,7 +279,7 @@ namespace Program
 
         public static string GetName()
         {
-            switch (rand.Next(0, 4))
+            switch (rand.Next(0, 5))
             {
                 case 0:
                     return "Giant Spider";
@@ -266,6 +290,8 @@ namespace Program
                     return "Skeleton";
                 case 3:
                     return "Warden";
+                case 4:
+                    return "Bat";
             }
             return "Goblin";
         }
@@ -278,25 +304,104 @@ namespace Program
             RunShop(player);
         }
 
+        /// <summary>
+        /// This function holds the shop and its calculations so its balanced with the current players power.
+        /// </summary>
         public static void RunShop(Player player)
         {
-            int potionPrice = 20 + 10 * player.mods;
-            int armorPrice = 100 * player.armorValue;
-            int weaponPrice = player.weaponValue + 1;
-            
+            int potionPrice;
+            int armorPrice;
+            int weaponPrice;
+            int difficultyPrice;
             
             while (true)
             {
+                potionPrice = 20 + 10 * player.mods;
+                armorPrice = 100 * player.armorValue + 1;
+                weaponPrice = 100 * (player.weaponValue);
+                difficultyPrice = 300 + 100 * player.mods;
+                Console.Clear();
                Console.WriteLine("<<<<<<<<<*SHOP*>>>>>>>>>>");
                Console.WriteLine("=========================");
-               Console.WriteLine("(W)eapons:             $");
+               Console.WriteLine("(W)eapons:             $" + weaponPrice);
                Console.WriteLine("------------------------");
-               Console.WriteLine("(A)rmor:               $"); 
+               Console.WriteLine("(A)rmor:               $" + armorPrice); 
                Console.WriteLine("------------------------");
-               Console.WriteLine("(P)otions:             $");
+               Console.WriteLine("(P)otions:             $" + potionPrice);
                Console.WriteLine("------------------------");
-               Console.WriteLine("(D)Mods:               $");
+               Console.WriteLine("(D)Mods:               $" + difficultyPrice);
                Console.WriteLine("========================="); 
+               // Displays players current stats BEFORE buying something from shop
+               Console.WriteLine("");
+               Console.WriteLine("");
+               Console.WriteLine("<<<<<<<<<*STATS*>>>>>>>>>>");
+               Console.WriteLine("=========================");
+               Console.WriteLine("Current Health: " + player.health);
+               Console.WriteLine("Coins: " + player.coins);
+               Console.WriteLine("Attack: " + player.weaponValue);
+               Console.WriteLine("Defense: " + player.armorValue);
+               Console.WriteLine("Potions: " + player.potion);
+               Console.WriteLine("Difficulty mods: " + player.mods);
+               Console.WriteLine("========================="); 
+               
+               //Format for buying something.
+               string input = Console.ReadLine().ToLower();
+               if (input == "w" || input == "weapon")
+               {
+                   Buy("weapon", weaponPrice, player);
+                   Console.Clear();
+               }
+               else if (input == "a" || input == "armor")
+               {
+                   Buy("armor", armorPrice, player);
+                   Console.Clear();
+               }
+               else if (input == "p" || input == "potion")
+               {
+                   Buy("potion", potionPrice, player);
+                   Console.Clear();
+               }
+               else if (input == "d" || input == "mod")
+               {
+                   Buy("mod", difficultyPrice, player);
+                   Console.Clear();
+               }
+               else if (input == "e" || input == "exit")
+               {
+                   break;
+               }
+            }
+
+            static void Buy(string item, int cost, Player player)
+            {
+                // Checks if the player has enough money to buy something.
+                if (player.coins >= cost) // if the player has enough money it will increase the strength or
+                                          // item count of the object they are trying to buy.
+                {
+                    if (item == "weapon")
+                    {
+                        player.weaponValue++;
+                    }
+                    else if (item == "armor")
+                    {
+                        player.armorValue++;
+                    }
+                    else if (item == "potion")
+                    {
+                        player.potion++;
+                    }
+                    else if (item == "armor")
+                    {
+                        player.mods++;
+                    }
+                    // Subtracts the item cost from the players gold count.
+                    player.coins -= cost;
+                }
+                else
+                {
+                    Console.WriteLine("You dont have enough Coins.");
+                    Console.ReadKey();
+                }
             }
             
             
@@ -309,4 +414,5 @@ namespace Program
 // https://learn.microsoft.com/en-us/dotnet/csharp/
 // https://www.w3schools.com/cs/index.php
 // https://youtu.be/wxznTygnRfQ?si=36g79w0njOLUFKzr
+// EnderUnknown
 // -----------------------------------------------
