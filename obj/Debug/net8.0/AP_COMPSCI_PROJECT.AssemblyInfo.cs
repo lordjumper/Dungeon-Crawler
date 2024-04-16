@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AP_COMPSCI_PROJECT")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+65e80d577f6aa63e3001a0a1ba57068f1009f2d8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b47c9ff826aad00bf779a257f2ea5a38ae6009d0")]
 [assembly: System.Reflection.AssemblyProductAttribute("AP_COMPSCI_PROJECT")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AP_COMPSCI_PROJECT")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

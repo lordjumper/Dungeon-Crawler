@@ -46,7 +46,7 @@ namespace Program
             Console.ReadKey();
         }
     }
-    public class Player // Player Base values
+    public class Player 
     {
         Random rand = new Random();
 
@@ -58,15 +58,16 @@ namespace Program
         public int potion = 5;
         public int weaponValue = 1;
     
-        public int mods = 0; // Difficulity 
+        public int mods = 0; 
 
-         public int GetHealth() // returns the health based on the mod value.
+        //Upper lower calculations made with the help of third party resources.
+         public int GetHealth() 
          {
              int upper = (2 * mods + 5);
              int lower = (mods + 2);
              return rand.Next(lower, upper);
          }
-         public int GetPower() // returns the power based on the mod value.
+         public int GetPower() 
          {
              int upper = (2 * mods + 2);
              int lower = (mods + 1);
@@ -83,8 +84,6 @@ namespace Program
     public class Encounters
     {
         static Random rand = new Random();
-        
-        //Encounters
 
         public static void FirstEncounter()
         {
@@ -125,8 +124,6 @@ namespace Program
             Combat(false,"ANOR THE GREAT",10,20);
         }
 
-        //Encounter Tools
-
         public static void RandomEncounter()
         {
             switch (rand.Next(0, 3))
@@ -145,16 +142,13 @@ namespace Program
                     break;
             }
         }
-        
-        //The Combat method first decides if these enounter is a special type or a random enemy.
-        //If its not a random enemy we get the name, power level, and health of that enemy.
         public static void Combat(bool random, string name, int power, int health)
         {
-            string n = ""; // name
-            int p = 0; // Power
-            int h = 0; // Health
+            string n = ""; 
+            int p = 0; 
+            int h = 0; 
 
-            if(random) // Sets the Type of random mob and their stats
+            if(random) 
             {
                 n = GetName();
                 p = Program.currentPlayer.GetPower();
@@ -168,6 +162,7 @@ namespace Program
             }
             while( h > 0 )
             {
+                // The loop below was made with the help of third party resources.
                 Console.Clear();
                 Console.WriteLine(n);
                 Console.WriteLine(p + "/" + h);
@@ -179,14 +174,13 @@ namespace Program
                 string decision = Console.ReadLine();
                 if (decision.ToLower() == "a" || decision.ToLower() == "attack")
                 {
-                    //Attack
                     Console.WriteLine("You swing your weapon at "+n);
                     int damage = p - Program.currentPlayer.armorValue;
                     if(damage < 0)
                     {
-                        damage = 0; //makes sure we dont heal the enemy if we subtract by a negetive number
+                        damage = 0;
                     }
-                    int attack = rand.Next(0, Program.currentPlayer.weaponValue) + rand.Next(1,4); // upper number is excluded (1-3) <<< true weapon value
+                    int attack = rand.Next(0, Program.currentPlayer.weaponValue) + rand.Next(1,4); 
                     Console.WriteLine("You Deal: " + attack + " damage");
                     Console.WriteLine("You Take: " + damage + " damage from " + n);
                     Program.currentPlayer.health -= damage;
@@ -194,7 +188,6 @@ namespace Program
                 }
                 else if (decision.ToLower() == "d" || decision.ToLower() == "defend")
                 {
-                    //Defend
                     Console.WriteLine("You brace yourself against " + n);
                     int damage = (p/4) - Program.currentPlayer.armorValue;
                     if(damage < 0)
@@ -209,8 +202,7 @@ namespace Program
                 }
                 else if (decision.ToLower() == "r" || decision.ToLower() == "run")
                 {
-                    //Run
-                    if (rand.Next(0,2) == 0) // picks random number between 0-1 <<<< Give players 50/50 shot of running away
+                    if (rand.Next(0,2) == 0)
                     {
                         Console.WriteLine("You failed to run from the "+n+", its attack hits you in the back...");
                         int damage = p - Program.currentPlayer.armorValue;
@@ -225,13 +217,11 @@ namespace Program
                     {
                         Console.WriteLine("You run away like a coward from the " +n);
                         Console.ReadKey();
-                        //Go back to Store
                         shop.LoadShop(Program.currentPlayer);
                     }
                 }
                 else if (decision.ToLower() == "h" || decision.ToLower() == "heal")
                 {
-                    //Heal
                     if(Program.currentPlayer.potion == 0)
                     {
                         Console.WriteLine("Bro tried to heal with nothing XD! " + "You dont have any potions");
@@ -260,7 +250,6 @@ namespace Program
 
                 if (Program.currentPlayer.health <= 0)
                 {
-                    //On Death
                     Console.Clear();
                     Console.WriteLine("You have been Slain by "+n);
                     Console.WriteLine("Press Enter to quit...");
@@ -276,7 +265,6 @@ namespace Program
             Program.currentPlayer.coins += coin;
             Console.ReadKey();
         }
-
         public static string GetName()
         {
             switch (rand.Next(0, 5))
@@ -303,11 +291,7 @@ namespace Program
         {
             RunShop(player);
         }
-
-        /// <summary>
-        /// This function holds the shop and its calculations so its balanced with the current players power.
-        /// </summary>
-        public static void RunShop(Player player)
+        public static void RunShop(Player player) //shop was made with the help of third party resources.
         {
             int potionPrice;
             int armorPrice;
@@ -331,7 +315,6 @@ namespace Program
                Console.WriteLine("------------------------");
                Console.WriteLine("(D)Mods:               $" + difficultyPrice);
                Console.WriteLine("========================="); 
-               // Displays players current stats BEFORE buying something from shop
                Console.WriteLine("");
                Console.WriteLine("");
                Console.WriteLine("<<<<<<<<<*STATS*>>>>>>>>>>");
@@ -344,7 +327,6 @@ namespace Program
                Console.WriteLine("Difficulty mods: " + player.mods);
                Console.WriteLine("========================="); 
                
-               //Format for buying something.
                string input = Console.ReadLine().ToLower();
                if (input == "w" || input == "weapon")
                {
@@ -374,9 +356,7 @@ namespace Program
 
             static void Buy(string item, int cost, Player player)
             {
-                // Checks if the player has enough money to buy something.
-                if (player.coins >= cost) // if the player has enough money it will increase the strength or
-                                          // item count of the object they are trying to buy.
+                if (player.coins >= cost) 
                 {
                     if (item == "weapon")
                     {
@@ -394,7 +374,6 @@ namespace Program
                     {
                         player.mods++;
                     }
-                    // Subtracts the item cost from the players gold count.
                     player.coins -= cost;
                 }
                 else
