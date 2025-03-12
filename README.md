@@ -1,2 +1,2 @@
 # Dungeon-Crawler
- In-Console Dungeon Crawler for CSP Project
+ In-Console Dungeon Crawler
